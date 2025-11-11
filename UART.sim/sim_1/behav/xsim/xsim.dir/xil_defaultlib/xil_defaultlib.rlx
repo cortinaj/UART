@@ -4,4 +4,6 @@ Oct 13 2023
 20:47:58
 C:/Users/JP/Documents/School/ECE524/UART/UART.sim/sim_1/behav/xsim/glbl.v,1697210495,verilog,,,,glbl,,,,,,,,
 C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sim_1/new/baud_gen_tb.v,1762840431,verilog,,,,baud_gen_tb,,,,,,,,
+C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sim_1/new/uart_tx_tb.v,1762842577,verilog,,,,uart_tx_tb,,,,,,,,
 C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/baud_gen.v,1762840356,verilog,,C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sim_1/new/baud_gen_tb.v,,baud_gen,,,,,,,,
+C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/uart_tx.v,1762842832,verilog,,C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sim_1/new/uart_tx_tb.v,,uart_tx,,,,,,,,

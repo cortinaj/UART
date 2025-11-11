@@ -1,0 +1,12 @@
+Time resolution is 1 ps
+UART TX Testbench Starting...
+T=0 ns | tx=1 | busy=0
+T=76000 ns | tx=1 | busy=1
+T=8684000 ns | tx=0 | busy=1
+T=17364000 ns | tx=1 | busy=1
+T=26044000 ns | tx=0 | busy=1
+T=69444000 ns | tx=1 | busy=1
+T=78124000 ns | tx=0 | busy=1
+T=86804000 ns | tx=1 | busy=0
+Simulation Finished.
+$stop called at time : 100078 ns : File "C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sim_1/new/uart_tx_tb.v" Line 81
