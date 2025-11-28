@@ -57,7 +57,7 @@ module uart_rx_v2(
     // 3. Oversampling bit counter (0..15)
     //----------------------------------------
     reg [3:0] os_count = 0;
-    wire sample = (os_count == 15);
+    wire sample = (os_count == 8);
 
     always @(posedge clk)
         if (Baud16Tick) begin

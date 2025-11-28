@@ -37,12 +37,5 @@ module baud_16tick_gen(
             tick <= 1'b0;
         end
     end
-//    reg [27:0] acc = 0;
-//    localparam integer K = 3965801;
-    
-//    always @(posedge clk) begin
-//        acc <= acc + K;
-//    end
-    
-//    assign tick = acc[27];
+
 endmodule

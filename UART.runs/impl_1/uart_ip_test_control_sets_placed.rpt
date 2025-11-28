@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Mon Nov 24 12:30:04 2025
+| Date         : Fri Nov 28 12:30:25 2025
 | Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file uart_ip_test_control_sets_placed.rpt
 | Design       : uart_ip_test
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |     9 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    23 |
+| Unused register locations in slices containing registers |    29 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -40,14 +40,14 @@ Table of Contents
 |       Fanout       | Count |
 +--------------------+-------+
 | Total control sets |     9 |
-| >= 0 to < 4        |     0 |
+| >= 0 to < 4        |     1 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     1 |
 | >= 8 to < 10       |     2 |
 | >= 10 to < 12      |     2 |
 | >= 12 to < 14      |     1 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     2 |
+| >= 16              |     1 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              19 |            8 |
+| No           | No                    | No                     |              18 |            7 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |              18 |            5 |
-| Yes          | No                    | No                     |              44 |           12 |
+| Yes          | No                    | No                     |              36 |            9 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              24 |            6 |
+| Yes          | Yes                   | No                     |              11 |            4 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -73,15 +73,15 @@ Table of Contents
 +----------------+---------------------------------------------------+---------------------------------------+------------------+----------------+--------------+
 |  Clock Signal  |                   Enable Signal                   |            Set/Reset Signal           | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+---------------------------------------------------+---------------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | uart_core/baud16gen/Baud16Tick                    |                                       |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | uart_core/uart_rx/data_reg[0]_0                   | rst_IBUF                              |                2 |              3 |         1.50 |
+|  clk_IBUF_BUFG | uart_core/baud16gen/Baud16Tick                    |                                       |                1 |              5 |         5.00 |
 |  clk_IBUF_BUFG |                                                   | uart_core/baud16gen/cnt[6]_i_1__0_n_0 |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | uart_core/uart_rx/ready                           |                                       |                1 |              8 |         8.00 |
-|  clk_IBUF_BUFG | uart_core/uart_tx/RxD_buff[7]_i_1_n_0             |                                       |                3 |              8 |         2.67 |
+|  clk_IBUF_BUFG | uart_core/uart_rx/E[0]                            | rst_IBUF                              |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | uart_core/uart_tx/RxD_buff[7]_i_1_n_0             |                                       |                2 |              8 |         4.00 |
 |  clk_IBUF_BUFG |                                                   | uart_core/baudgen/cnt[10]_i_1_n_0     |                3 |             11 |         3.67 |
 |  clk_IBUF_BUFG | uart_core/uart_rx/FSM_onehot_state[10]_i_1__0_n_0 |                                       |                2 |             11 |         5.50 |
 |  clk_IBUF_BUFG | uart_core/uart_tx/FSM_onehot_state[11]_i_1_n_0    |                                       |                4 |             12 |         3.00 |
-|  clk_IBUF_BUFG |                                                   |                                       |                8 |             19 |         2.38 |
-|  clk_IBUF_BUFG | sel                                               | uart_core/uart_rx/ready               |                6 |             24 |         4.00 |
+|  clk_IBUF_BUFG |                                                   |                                       |                7 |             18 |         2.57 |
 +----------------+---------------------------------------------------+---------------------------------------+------------------+----------------+--------------+
 
 
