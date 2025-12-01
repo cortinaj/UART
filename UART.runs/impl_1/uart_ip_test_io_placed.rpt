@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date                      : Fri Nov 28 12:30:25 2025
+| Date                      : Sun Nov 30 20:56:39 2025
 | Host                      : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command                   : report_io -file uart_ip_test_io_placed.rpt
 | Design                    : uart_ip_test
@@ -25,7 +25,7 @@ Table of Contents
 +---------------+
 | Total User IO |
 +---------------+
-|             8 |
+|             9 |
 +---------------+
 
 
@@ -232,7 +232,7 @@ Table of Contents
 | K15        |             |            | GND                     | GND           |             |         |            |      |                     |                      |     0.0 |            |           |          |      |                  |              |                   |              |
 | K16        |             | High Range | IO_L24P_T3_AD15P_35     | User IO       |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | K17        | clk         | High Range | IO_L12P_T1_MRCC_35      | INPUT         | LVCMOS33    |      35 |            |      |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
-| K18        |             | High Range | IO_L12N_T1_MRCC_35      | User IO       |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
+| K18        | btn         | High Range | IO_L12N_T1_MRCC_35      | INPUT         | LVCMOS33    |      35 |            |      |                     |                 NONE |         | FIXED      |           |          |      | NONE             |              |                   |              |
 | K19        |             | High Range | IO_L10P_T1_AD11P_35     | User IO       |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |
 | K20        |             | High Range | VCCO_35                 | VCCO          |             |      35 |            |      |                     |                      |    3.30 |            |           |          |      |                  |              |                   |              |
 | L1         |             |            | PS_DDR_A5_502           | PSS IO        |             |         |            |      |                     |                      |         |            |           |          |      |                  |              |                   |              |

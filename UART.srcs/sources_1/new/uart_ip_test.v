@@ -21,23 +21,31 @@
 module uart_ip_test(
     input  clk,          // 125 MHz clock
     input rst,
+    input btn,
     input  RX,           // UART receive
     output TX,           // UART transmit
     output reg [3:0]led      // LED indicator for TX activity
 );
 
-   //--------------------------------------
-    // Wires for UART_IP RX
-    //--------------------------------------
+    // Wires for UART_IP
     wire [7:0] rx_data;   // Received byte
     wire       rx_ready;  // Pulse when byte received
+
+    //Wires for Debouncer Module
+    wire btn_debounce;
+    
+    //Wires for baud tick gen
+    wire baud_tick;
+    
+    reg [13:0] pace_cnt = 0;
+    wire pace_ready = (pace_cnt == 0);
     
    reg  [7:0] tx_data = 8'd0;
    reg        tx_start = 1'b0;
-   wire       tx_busy;
-    //--------------------------------------
-    // Instantiate UART IP (RX only)
-    //--------------------------------------
+   
+
+
+    // Instantiate UART IP 
     UART_IP uart_core (
         .sys_clk(clk),
         .TX(TX),             
@@ -49,51 +57,80 @@ module uart_ip_test(
         .RxD_par(tx_data),   
         .RxD_start(tx_start)   
     );
-
-   always @(posedge clk) begin
-       if (rst) begin
-           led       <= 4'b0000;
-           tx_start  <= 1'b0;
-           tx_data   <= 8'd0;
-       end
-       else begin
-           tx_start <= 1'b0; // default
-
-           if (rx_ready) begin
-               tx_data  <= rx_data;   
-               tx_start <= 1'b1; // echo received byte
-
-               // Check for '1' key
-               if (rx_data == "1") begin
-                   led[3:1] <= 3'b111; // turn all LEDs on
-               end
-           end
-       end
-   end
     
-   //--------------------------------------
-   // Optional LED pulse logic
-   //--------------------------------------
-   reg [23:0] led_timer;
-
-   always @(posedge clk) begin
-       if (rst) begin
-           led_timer <= 24'd0;
-           led[0] <= 1'b0;
-       end
-       else begin
-           if (rx_ready && rx_data != "1") begin
-               led_timer <= 24'hFFFFFF; // load timer on RX
-           end
-           else if (led_timer != 0) begin
-               led_timer <= led_timer - 1; // decrement timer
-           end
-
-           // Only use bit 0 for pulse effect
-           if (rx_data != "1")
-               led[0] <= (led_timer != 0);
-       end
-   end
+    debouncer db(.clk(clk),
+                 .rst(rst),
+                 .btn_in(btn),
+                 .pulse_out(btn_debounce)
+                 );
+    baud_tick_gen bt(.clk(clk),
+                     .tick(baud_tick)
+                     );
     
-   
+     // ---------------------------------------------------------
+    // STRING TO SEND ON BUTTON PRESS
+    // ---------------------------------------------------------
+    localparam MSG_LEN = 15;
+    localparam [8*MSG_LEN-1:0] MESSAGE = 
+        {"Button Press!"};
+
+    reg send_msg = 0;
+    reg [7:0] msg_index = 0;
+
+    // Extract the next character
+    wire [7:0] msg_char = MESSAGE[8*(MSG_LEN-1 - msg_index) +: 8];
+    
+   always @(posedge clk) begin
+        tx_start <= 1'b0;     // default off (1-cycle pulse)
+
+        if (rst) begin
+            led       <= 4'b0000;
+            msg_index <= 0;
+            send_msg  <= 0;
+        end 
+        else begin
+
+            // ---------------------------------------------
+            // BUTTON PRESSED ? Start sending message
+            // ---------------------------------------------
+            if (btn_debounce)
+                send_msg <= 1;
+
+            // ---------------------------------------------
+            // ACTIVE MESSAGE MODE (send one byte per tx_done)
+            // ---------------------------------------------
+           if (send_msg) begin
+                if (pace_ready) begin
+                    if (msg_index < MSG_LEN) begin
+                        tx_data  <= msg_char;
+                        tx_start <= 1'b1;
+
+                        msg_index <= msg_index + 1;
+                        pace_cnt <= 14'd12000; // Wait full char time
+                    end 
+                    else begin
+                        send_msg  <= 0;
+                        msg_index <= 0;
+                    end
+                end else begin
+                    pace_cnt <= pace_cnt - 1;
+                end
+            end
+
+            // ---------------------------------------------
+            // NORMAL UART ECHO + LED CONTROL
+            // ---------------------------------------------
+            if (!send_msg) begin
+                if (rx_ready) begin
+                    tx_data <= rx_data;
+                    tx_start <= 1'b1;
+
+                    if (rx_data == "1")
+                        led <= 4'b1111;
+                end
+            end
+
+        end
+    end
+  
 endmodule

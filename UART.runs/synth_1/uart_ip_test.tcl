@@ -72,6 +72,7 @@ proc create_report { reportName command } {
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 8
 set_param xicom.use_bs_reader 1
+set_msg_config -id {Common 17-41} -limit 10000000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z010clg400-1
 
@@ -92,6 +93,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/UART_IP.v
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/baud_16tick_gen.v
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/baud_tick_gen.v
+  C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/debouncer.v
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/uart_rx_v2.v
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/uart_tx_v2.v
   C:/Users/JP/Documents/School/ECE524/UART/UART.srcs/sources_1/new/uart_ip_test.v
