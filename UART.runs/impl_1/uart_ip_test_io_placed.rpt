@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date                      : Sun Nov 30 20:56:39 2025
+| Date                      : Wed Dec  3 19:13:48 2025
 | Host                      : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command                   : report_io -file uart_ip_test_io_placed.rpt
 | Design                    : uart_ip_test

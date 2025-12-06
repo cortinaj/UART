@@ -28,17 +28,13 @@ module uart_rx_v2(
     output reg       ready = 0
 );
 
-    //----------------------------------------
     // 1. Synchronize RXD into clock domain
-    //----------------------------------------
     reg [1:0] rxd_sync;
     always @(posedge clk)
         if (Baud16Tick)
             rxd_sync <= {rxd_sync[0], rxd};
 
-    //----------------------------------------
     // 2. Simple noise filter (3-bit majority)
-    //----------------------------------------
     reg [2:0] filter = 3'b111;
     reg       rxd_filt = 1;
 
@@ -53,9 +49,7 @@ module uart_rx_v2(
             else if (filter == 3'b111) rxd_filt <= 1;
         end
 
-    //----------------------------------------
     // 3. Oversampling bit counter (0..15)
-    //----------------------------------------
     reg [3:0] os_count = 0;
     wire sample = (os_count == 8);
 
@@ -67,9 +61,7 @@ module uart_rx_v2(
                 os_count <= os_count + 1;
         end
 
-    //----------------------------------------
     // 4. State machine
-    //----------------------------------------
     localparam IDLE = 4'b0000,
                START = 4'b0001,
                BIT0 = 4'b0010,

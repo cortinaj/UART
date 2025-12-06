@@ -28,15 +28,11 @@ module uart_tx_v2(
     output reg   TxD_ser = 1'b1 // UART TX line (idle = 1)
 );
 
-    // ------------------------------------------------------------
     // Internal registers
-    // ------------------------------------------------------------
     reg  [3:0] state = 0;
     reg  [7:0] RxD_buff = 0;
 
-    // ------------------------------------------------------------
     // State Machine
-    // ------------------------------------------------------------
     always @(posedge sys_clk) begin
 
         // --- Latch data only when idle ---
@@ -83,10 +79,7 @@ module uart_tx_v2(
         endcase
     end
 
-
-    // ------------------------------------------------------------
     // UART Output
-    // ------------------------------------------------------------
     always @(posedge sys_clk) begin
         // state < 3 = idle(1), align(1), start(0)
         // state >= 8 = data bits, send LSB

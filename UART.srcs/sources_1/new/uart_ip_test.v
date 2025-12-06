@@ -43,6 +43,14 @@ module uart_ip_test(
    reg  [7:0] tx_data = 8'd0;
    reg        tx_start = 1'b0;
    
+   wire slow_clk;
+   
+   wire [3:0] bin_count;
+   wire [3:0] onehot_count;
+   
+   reg[1:0] mode = 0;
+   reg[3:0] counter_led = 0;
+   
 
 
     // Instantiate UART IP 
@@ -63,13 +71,23 @@ module uart_ip_test(
                  .btn_in(btn),
                  .pulse_out(btn_debounce)
                  );
-    baud_tick_gen bt(.clk(clk),
-                     .tick(baud_tick)
-                     );
+    freq_div #(.DIVISOR(50_000_000)) div(.clk_in(clk),
+                                         .rst(rst),
+                                         .clk_out(slow_clk)
+                                         );
+    binary_up_counter #(.N(4)) bin (.clk(slow_clk),
+                          .rst(rst),
+                          .enable(mode==1),
+                          .count(bin_count)
+                          );
+    one_hot_counter #(.N(4)) one(.clk(slow_clk),
+                       .rst(rst),
+                       .enable(mode==2),
+                       .count(onehot_count)
+                       );
+   
     
-     // ---------------------------------------------------------
     // STRING TO SEND ON BUTTON PRESS
-    // ---------------------------------------------------------
     localparam MSG_LEN = 15;
     localparam [8*MSG_LEN-1:0] MESSAGE = 
         {"Button Press!"};
@@ -80,6 +98,18 @@ module uart_ip_test(
     // Extract the next character
     wire [7:0] msg_char = MESSAGE[8*(MSG_LEN-1 - msg_index) +: 8];
     
+    always @(posedge slow_clk or posedge rst) begin
+        if (rst)
+            counter_led <= 4'b0000;
+        else begin
+            case (mode)
+                1: counter_led <= bin_count;      // binary counter
+                2: counter_led <= onehot_count;   // one-hot counter
+                default: counter_led <= 4'b0000;
+            endcase
+        end
+    end
+    
    always @(posedge clk) begin
         tx_start <= 1'b0;     // default off (1-cycle pulse)
 
@@ -89,22 +119,15 @@ module uart_ip_test(
             send_msg  <= 0;
         end 
         else begin
-
-            // ---------------------------------------------
             // BUTTON PRESSED ? Start sending message
-            // ---------------------------------------------
             if (btn_debounce)
                 send_msg <= 1;
-
-            // ---------------------------------------------
             // ACTIVE MESSAGE MODE (send one byte per tx_done)
-            // ---------------------------------------------
            if (send_msg) begin
                 if (pace_ready) begin
                     if (msg_index < MSG_LEN) begin
                         tx_data  <= msg_char;
                         tx_start <= 1'b1;
-
                         msg_index <= msg_index + 1;
                         pace_cnt <= 14'd12000; // Wait full char time
                     end 
@@ -116,20 +139,25 @@ module uart_ip_test(
                     pace_cnt <= pace_cnt - 1;
                 end
             end
-
-            // ---------------------------------------------
             // NORMAL UART ECHO + LED CONTROL
-            // ---------------------------------------------
             if (!send_msg) begin
                 if (rx_ready) begin
                     tx_data <= rx_data;
                     tx_start <= 1'b1;
-
+                    if (rx_data == "b")
+                        mode <= 1;
+                    if (rx_data == "o")
+                        mode <= 2;
+                    if (rx_data == "0")
+                        mode <= 0;
                     if (rx_data == "1")
                         led <= 4'b1111;
                 end
+                if (mode == 0)
+                    led <= led;           // keep manual LED state
+                else
+                    led <= counter_led;   // show counter animation
             end
-
         end
     end
   

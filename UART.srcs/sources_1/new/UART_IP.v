@@ -35,9 +35,7 @@ module UART_IP(
     input        RxD_start  // pulse = send byte
 );
 
-    //--------------------------------------
     // Baud Generators
-    //--------------------------------------
     wire BaudTick;
     wire Baud16Tick;
 
@@ -51,9 +49,7 @@ module UART_IP(
         .tick(Baud16Tick)
     );
 
-    //--------------------------------------
     // UART Transmitter
-    //--------------------------------------
     uart_tx_v2 uart_tx (
         .RxD_par(RxD_par),       // byte to send
         .RxD_start(RxD_start),   // pulse to start sending
@@ -62,9 +58,7 @@ module UART_IP(
         .TxD_ser(TX)             // serial output
     );
 
-    //--------------------------------------
     // UART Receiver
-    //--------------------------------------
     uart_rx_v2 uart_rx (
         .clk(sys_clk),
         .Baud16Tick(Baud16Tick),

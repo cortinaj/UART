@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date             : Sun Nov 30 20:56:54 2025
+| Date             : Wed Dec  3 19:13:56 2025
 | Host             : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command          : report_power -file uart_ip_test_power_routed.rpt -pb uart_ip_test_power_summary_routed.pb -rpx uart_ip_test_power_routed.rpx
 | Design           : uart_ip_test
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.585        |
+| Total On-Chip Power (W)  | 0.884        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.486        |
-| Device Static (W)        | 0.099        |
+| Dynamic (W)              | 0.781        |
+| Device Static (W)        | 0.103        |
 | Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 78.3         |
-| Junction Temperature (C) | 31.7         |
+| Max Ambient (C)          | 74.8         |
+| Junction Temperature (C) | 35.2         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,16 +52,16 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Slice Logic    |     0.287 |      271 |       --- |             --- |
-|   LUT as Logic |     0.240 |      104 |     17600 |            0.59 |
-|   Register     |     0.023 |      128 |     35200 |            0.36 |
-|   CARRY4       |     0.018 |        9 |      4400 |            0.20 |
+| Slice Logic    |     0.424 |      387 |       --- |             --- |
+|   LUT as Logic |     0.346 |      157 |     17600 |            0.89 |
+|   Register     |     0.037 |      175 |     35200 |            0.50 |
+|   CARRY4       |     0.036 |       17 |      4400 |            0.39 |
 |   BUFG         |     0.006 |        1 |        32 |            3.13 |
-|   Others       |     0.000 |       12 |       --- |             --- |
-| Signals        |     0.187 |      179 |       --- |             --- |
+|   Others       |     0.000 |       14 |       --- |             --- |
+| Signals        |     0.345 |      283 |       --- |             --- |
 | I/O            |     0.012 |        9 |       100 |            9.00 |
-| Static Power   |     0.099 |          |           |                 |
-| Total          |     0.585 |          |           |                 |
+| Static Power   |     0.103 |          |           |                 |
+| Total          |     0.884 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -71,8 +71,8 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.490 |       0.486 |      0.004 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.006 |       0.000 |      0.006 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.786 |       0.781 |      0.005 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.007 |       0.000 |      0.007 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -84,7 +84,7 @@ Table of Contents
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccpint   |       1.000 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
+| Vccpint   |       1.000 |     0.022 |       0.000 |      0.022 |       NA    | Unspecified | NA         |
 | Vccpaux   |       1.800 |     0.010 |       0.000 |      0.010 |       NA    | Unspecified | NA         |
 | Vccpll    |       1.800 |     0.003 |       0.000 |      0.003 |       NA    | Unspecified | NA         |
 | Vcco_ddr  |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -145,12 +145,15 @@ Table of Contents
 +---------------+-----------+
 | Name          | Power (W) |
 +---------------+-----------+
-| uart_ip_test  |     0.486 |
-|   db          |     0.083 |
-|   uart_core   |     0.299 |
-|     baud16gen |     0.104 |
-|     baudgen   |     0.143 |
-|     uart_rx   |     0.051 |
+| uart_ip_test  |     0.781 |
+|   bin         |     0.016 |
+|   db          |     0.088 |
+|   div         |     0.268 |
+|   one         |     0.002 |
+|   uart_core   |     0.305 |
+|     baud16gen |     0.114 |
+|     baudgen   |     0.137 |
+|     uart_rx   |     0.053 |
 +---------------+-----------+
 
 
